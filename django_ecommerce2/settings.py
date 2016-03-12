@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'registration',
     # My apps
     'newsletter',
+    'products',
 ]
 
 MIDDLEWARE_CLASSES = [
