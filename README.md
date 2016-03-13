@@ -36,3 +36,5 @@ Ver.2   [Products App](../../tree/4f3251004f29b20addc412802afc5ccb3dd2e258)
 Ver.3   [Product Detail View](../../tree/9d01d36277152bbfb7ec3d8b9e79af0694c83b0d)
 
 Ver.4   [List View](../../tree/b94c4a912b42054ad3e6c9a08b476f6f001360de)
+
+Ver.5   [Using Links for Model Instances](../../tree/40edd2c1b1ee6740c249f5e234f973586cb6b7dd)
