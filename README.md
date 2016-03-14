@@ -42,3 +42,5 @@ Ver.5   [Using Links for Model Instances](../../tree/40edd2c1b1ee6740c249f5e234f
 Ver.6   [Model Managers](../../tree/6ec459823379f71cb35028449877ad8de58d0b11)
 
 Ver.7   [Product Variations](../../tree/0a03b123da89698cb7ffb2b100745d2548bcc2a0)
+
+Ver.8   [Post Save Signal for Variations](../../tree/9f8af3071f77638b66b7881012970d464ebe9491)
