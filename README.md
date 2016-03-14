@@ -40,3 +40,5 @@ Ver.4   [List View](../../tree/b94c4a912b42054ad3e6c9a08b476f6f001360de)
 Ver.5   [Using Links for Model Instances](../../tree/40edd2c1b1ee6740c249f5e234f973586cb6b7dd)
 
 Ver.6   [Model Managers](../../tree/6ec459823379f71cb35028449877ad8de58d0b11)
+
+Ver.7   [Product Variations](../../tree/0a03b123da89698cb7ffb2b100745d2548bcc2a0)
