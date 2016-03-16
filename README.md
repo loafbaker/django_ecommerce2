@@ -58,3 +58,5 @@ Ver.13   [Login Required Mixins](../../tree/a5ba2382638b286049ea0eb4f4b5e93f10e2
 Ver.14   [Django Messages](../../tree/c89ffeebd6158b32b31e003ea5440eca46ca7b78)
 
 Ver.15   [Social Share](../../tree/385de2f6c8ce35bda14bd850c0a5e07d6b613381)
+
+Ver.16   [Dynamic Update Price with jQuery](../../tree/2407f99ed7c7532f393e5b25a2f60fb640b4bcc8)
