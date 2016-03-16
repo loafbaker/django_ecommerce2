@@ -50,3 +50,5 @@ Ver.9   [Product Detail Layout](../../tree/e9f7a5ec5776e4505c1aee1d4449f7fbacf7a
 Ver.10   [Image Uploads](../../tree/62a29cccf24ec1fd07d95e3a6469d70e0d92dd4c)
 
 Ver.11   [Search Query](../../tree/bf2a75c092220c50a523520ba2b89ba7607b3958)
+
+Ver.12   [Formset for Inventory](../../tree/d69646c743571a61a8e4efcbb22802f34c4a63be)

@@ -11,6 +11,7 @@ import re
 
 from .models import Product, Variation
 from .forms import VariationInventoryFormSet
+from .mixins import StaffRequiredMixin
 
 def price_test(query):
     """
@@ -50,7 +51,7 @@ class ProductListView(ListView):
         return qs
 
 
-class VariationListView(ListView):
+class VariationListView(StaffRequiredMixin, ListView):
     model = Variation
 
     def get_context_data(self, *args, **kwargs):
