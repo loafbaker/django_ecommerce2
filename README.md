@@ -54,3 +54,5 @@ Ver.11   [Search Query](../../tree/bf2a75c092220c50a523520ba2b89ba7607b3958)
 Ver.12   [Formset for Inventory](../../tree/d69646c743571a61a8e4efcbb22802f34c4a63be)
 
 Ver.13   [Login Required Mixins](../../tree/a5ba2382638b286049ea0eb4f4b5e93f10e22cf3)
+
+Ver.14   [Django Messages](../../tree/c89ffeebd6158b32b31e003ea5440eca46ca7b78)
