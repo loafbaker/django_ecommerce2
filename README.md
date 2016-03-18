@@ -62,3 +62,5 @@ Ver.15   [Social Share](../../tree/385de2f6c8ce35bda14bd850c0a5e07d6b613381)
 Ver.16   [Dynamic Update Price with jQuery](../../tree/2407f99ed7c7532f393e5b25a2f60fb640b4bcc8)
 
 Ver.17   [Single Variation Price](../../tree/62b82551f387ec9aabf6c51fe7abd2b5a5442bad)
+
+Ver.18   [Product Categories](../../tree/fc9983963a8bdfd4fffd90d222203acf257a7335)

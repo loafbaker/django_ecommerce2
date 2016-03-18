@@ -9,7 +9,7 @@ import re
 
 # Create your views here.
 
-from .models import Product, Variation
+from .models import Product, Variation, Category
 from .forms import VariationInventoryFormSet
 from .mixins import StaffRequiredMixin
 
@@ -83,6 +83,23 @@ class VariationListView(StaffRequiredMixin, ListView):
             messages.success(request, 'Your inventory and pricing have been updated.')
             return redirect('product_detail', pk=product_pk)
         raise Http404
+
+class CategoryListView(ListView):
+    model = Category
+    queryset = Category.objects.all()
+
+class CategoryDetailView(DetailView):
+    model = Category
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CategoryDetailView, self).get_context_data(*args, **kwargs)
+        obj = self.get_object()
+        product_set = obj.product_set.all()
+        default_products = obj.default_category.all()
+        products = ( product_set | default_products ).distinct()
+        context['products'] = products
+        return context
+
 
 def product_detail_view_func(request, id):
     product_instance = get_object_or_404(Product, id=id)

@@ -35,7 +35,7 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-    	return reverse('product_detail', kwargs={'pk': self.pk})
+        return reverse('product_detail', kwargs={'pk': self.pk})
 
 class Variation(models.Model):
     product = models.ForeignKey(Product)
@@ -87,3 +87,6 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'slug': self.slug})
