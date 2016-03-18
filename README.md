@@ -66,3 +66,5 @@ Ver.17   [Single Variation Price](../../tree/62b82551f387ec9aabf6c51fe7abd2b5a54
 Ver.18   [Product Categories](../../tree/fc9983963a8bdfd4fffd90d222203acf257a7335)
 
 Ver.19   [Category Detial View](../../tree/7326fc7a50e77d4b9b01a7b2c22b92286da24065)
+
+Ver.20   [Related Products](../../tree/63044ea74568af081da40e82463563c1e21c3c5d)
