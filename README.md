@@ -72,3 +72,5 @@ Ver.20   [Related Products](../../tree/63044ea74568af081da40e82463563c1e21c3c5d)
 Ver.21   [Random Queryset & Improve UI](../../tree/8caff80a980b86bde64d96c935a81adf78d99fc6)
 
 Ver.22   [Django Template Include with Variable](../../tree/fadf4226136c30771842a634cdfee77e027af9b1)
+
+Ver.23   [Featured Product on Homepage](../../tree/7e19c21fa3b79d008bebcd308e55509d620341e5)
