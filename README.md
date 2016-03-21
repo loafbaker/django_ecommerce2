@@ -70,3 +70,5 @@ Ver.19   [Category Detial View](../../tree/7326fc7a50e77d4b9b01a7b2c22b92286da24
 Ver.20   [Related Products](../../tree/63044ea74568af081da40e82463563c1e21c3c5d)
 
 Ver.21   [Random Queryset & Improve UI](../../tree/8caff80a980b86bde64d96c935a81adf78d99fc6)
+
+Ver.22   [Django Template Include with Variable](../../tree/fadf4226136c30771842a634cdfee77e027af9b1)

@@ -4,16 +4,19 @@ from django.shortcuts import render
 
 # Create your views here.
 
+from products.models import ProductFeatured
 from .forms import ContactForm, SignUpForm
 from .models import SignUp
 
 
 def home(request):
     title = 'Sign Up Now'
+    featured_product = ProductFeatured.objects.filter(active=True).order_by('-timestamp').first()
     form = SignUpForm(request.POST or None)
     context = {
         'title': title,
         'form': form,
+        'featured_product': featured_product,
     }
     if form.is_valid():
         instance = form.save(commit=False)

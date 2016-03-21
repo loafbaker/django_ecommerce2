@@ -11,16 +11,64 @@
   	margin-bottom: 0px !important;
   }
 
+    {% if featured_product.as_background %}
+  .jumbotron {
+    background: url('{{ featured_product.image.url }}') center center no-repeat;
+    background-size: cover;
+    background-color: #FFF;
+    color: #000;
+  }
+    {% else %}
   .jumbotron {
   	background-color: #5ACDFF;
   	color: #000;
   }
+
+    {% endif %}
   {% endblock %}
 </style>
 
      
 {% block jumbotron %}
   {% if not request.user.is_authenticated %}
+    {% if featured_product %}
+      {% if featured_product.as_background %}
+<!-- Show featured product image as the background of jumbotron -->
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h1>{{ featured_product.title }}</h1>
+        <p>{{ featured_product.text }}</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="{{ featured_product.product.get_absolute_url }}" role="button">More Detials</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+      {% else %}
+<!-- Show featured product image inside the jumbotron -->
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 {% if featured_product.text_right %} pull-right {% endif %}">
+        <h1>{{ featured_product.title }}</h1>
+        <p>{{ featured_product.text }}</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="{{ featured_product.product.get_absolute_url }}" role="button">More Detials</a>
+        </p>
+      </div>
+      <div class="col-sm-6" >
+        <img class="img-responsive" src="{{ featured_product.image.url }}" />
+      </div>
+    </div>
+  </div>
+</div>
+      {% endif %}
+
+    {% else %}
 
 <div class="jumbotron">
   <div class="container">
@@ -39,6 +87,7 @@
   </div>
 </div>
 
+    {% endif %}
   {% endif %}
 {% endblock %}
 
