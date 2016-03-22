@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from products.models import ProductFeatured
+from products.models import Product, ProductFeatured
 from .forms import ContactForm, SignUpForm
 from .models import SignUp
 
@@ -12,11 +12,13 @@ from .models import SignUp
 def home(request):
     title = 'Sign Up Now'
     featured_product = ProductFeatured.objects.filter(active=True).order_by('-timestamp').first()
+    products = Product.objects.all().order_by('?')[:4]
     form = SignUpForm(request.POST or None)
     context = {
         'title': title,
         'form': form,
         'featured_product': featured_product,
+        'products': products,
     }
     if form.is_valid():
         instance = form.save(commit=False)
@@ -29,13 +31,6 @@ def home(request):
         instance.save()
         context = {
             'title': 'Thank you',
-        }
-
-    if request.user.is_authenticated() and request.user.is_staff:
-        queryset = SignUp.objects.all().order_by('-timestamp') #.filter(full_name__iexact='Justin')
-        #print(SignUp.objects.all().order_by('-timestamp').filter(full_name__iexact='Justin').count())
-        context = {
-            'queryset': queryset,
         }
 
     return render(request, 'home.html', context)
