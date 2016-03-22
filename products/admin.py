@@ -4,11 +4,29 @@ from django.contrib import admin
 
 from .models import Product, Variation, ProductImage, Category, ProductFeatured
 
-admin.site.register(Product)
+class VariationInline(admin.TabularInline):
+    model = Variation
+    extra = 0
 
-admin.site.register(Variation)
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 0
 
-admin.site.register(ProductImage)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['__unicode__', 'price']
+    inlines = [
+        VariationInline,
+        ProductImageInline,
+    ]
+
+    class Meta:
+        model = Product
+
+admin.site.register(Product, ProductAdmin)
+
+# admin.site.register(Variation)
+
+# admin.site.register(ProductImage)
 
 admin.site.register(Category)
 

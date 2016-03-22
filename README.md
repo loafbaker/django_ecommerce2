@@ -78,3 +78,5 @@ Ver.23   [Featured Product on Homepage](../../tree/7e19c21fa3b79d008bebcd308e555
 Ver.24   [Login as Dropdown Menu](../../tree/65745ff26fce6edce2ad4949a598c0c76275d34c)
 
 Ver.25   [Shopping Cart Icon](../../tree/854d0f652c4f44574eab1cb9edccfed591f77d7e)
+
+Ver.26   [Product Lists on Homepage](../../tree/a7cff334892cbbad8d32ea2d4420c94a6b12947a)
