@@ -82,3 +82,5 @@ Ver.25   [Shopping Cart Icon](../../tree/854d0f652c4f44574eab1cb9edccfed591f77d7
 Ver.26   [Product Lists on Homepage](../../tree/a7cff334892cbbad8d32ea2d4420c94a6b12947a)
 
 Ver.27   [Product Editing with Django Admin Inlines](../../tree/6cb781747bf1d5db898f278a491345850364dd3b)
+
+Ver.23   [Carts App & ManyToMany Through](../../tree/be63dbdfe840629364becf6380fb105b21c3bc67)
