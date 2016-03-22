@@ -74,3 +74,5 @@ Ver.21   [Random Queryset & Improve UI](../../tree/8caff80a980b86bde64d96c935a81
 Ver.22   [Django Template Include with Variable](../../tree/fadf4226136c30771842a634cdfee77e027af9b1)
 
 Ver.23   [Featured Product on Homepage](../../tree/7e19c21fa3b79d008bebcd308e55509d620341e5)
+
+Ver.24   [Login as Dropdown Menu](../../tree/65745ff26fce6edce2ad4949a598c0c76275d34c)
