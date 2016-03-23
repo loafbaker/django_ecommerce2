@@ -24,6 +24,30 @@
     }    
   }
   $(".variation_select").change(setPrice);
+
+  $("#submit-btn").click(function(event) {
+    event.preventDefault();
+    var formData = $("#add-form").serialize();
+    $.ajax({
+      type: "GET",
+      url: "{% url 'cart' %}",
+      data: formData,
+      success: function(data) {
+        if (data.item_added) {
+          $("#json-message").text("Item Added!");
+        } else if (data.item_updated) {
+          $("#json-message").text("Item Updated!");
+        } else {
+          $("#json-message").text("");
+        };
+      },
+      error: function(response, error) {
+        console.log(response);
+        console.log(error);
+      }
+    })
+    // $("#add-form").submit();
+  })
 {% endblock %}
 </script>
 
@@ -48,7 +72,8 @@
 
   	<h3 id="price">$ {{ object.price }}</h3>
 
-    <form method="GET" action="{% url 'cart' %}">
+    <form id="add-form" method="GET" action="{% url 'cart' %}">
+      <p id="json-message" class="lead"></p>
   {% if object.variation_set.count > 0 %}
 
       <select name="item_id" class="form-control variation_select">
@@ -61,7 +86,7 @@
 
       <br/>
       <input type="number" name="qty" value="1" class="form-control" />
-      <input type="submit" value="Add to Cart" class="btn btn-default" />
+      <input id="submit-btn" type="submit" value="Add to Cart" class="btn btn-default" />
     </form>
 
     <hr/>
