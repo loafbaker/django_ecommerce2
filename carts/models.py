@@ -23,3 +23,6 @@ class CartItem(models.Model):
 
     def __unicode__(self):
         return self.item.title
+
+    def remove_url(self):
+        return self.item.remove_from_cart()

@@ -83,6 +83,8 @@ Ver.26   [Product Lists on Homepage](../../tree/a7cff334892cbbad8d32ea2d4420c94a
 
 Ver.27   [Product Editing with Django Admin Inlines](../../tree/6cb781747bf1d5db898f278a491345850364dd3b)
 
-Ver.23   [Carts App & ManyToMany Through](../../tree/be63dbdfe840629364becf6380fb105b21c3bc67)
+Ver.28   [Carts App & ManyToMany Through](../../tree/be63dbdfe840629364becf6380fb105b21c3bc67)
 
-Ver.24   [Cart in a CBV & Django Sessions](../../tree/60b068bc51fe7b51667d9e884cb399f25d828fbf)
+Ver.29   [Cart in a CBV & Django Sessions](../../tree/60b068bc51fe7b51667d9e884cb399f25d828fbf)
+
+Ver.30   [Render Cart View](../../tree/f13d068a9854c2304c0849605a0ca33ac414fbf9)

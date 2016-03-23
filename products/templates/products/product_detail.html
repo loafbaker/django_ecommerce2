@@ -48,18 +48,21 @@
 
   	<h3 id="price">$ {{ object.price }}</h3>
 
+    <form method="GET" action="{% url 'cart' %}">
   {% if object.variation_set.count > 0 %}
 
-    <select class="form-control variation_select">
+      <select name="item_id" class="form-control variation_select">
       {% for var_obj in object.variation_set.all %}
-      <option data-price="{{ var_obj.price }}" data-sale-price="{{ var_obj.sale_price }}" value="{{ var_obj.id }}">{{ var_obj.title }}</option>
+        <option data-price="{{ var_obj.price }}" data-sale-price="{{ var_obj.sale_price }}" value="{{ var_obj.id }}">{{ var_obj.title }}</option>
       {% endfor %}
-    </select>
+      </select>
 
   {% endif %}
 
-    <br/>
-    <a href="#" class="btn btn-primary">Add to Cart</a>
+      <br/>
+      <input type="number" name="qty" value="1" class="form-control" />
+      <input type="submit" value="Add to Cart" class="btn btn-default" />
+    </form>
 
     <hr/>
     <p>
