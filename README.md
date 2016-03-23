@@ -88,3 +88,5 @@ Ver.28   [Carts App & ManyToMany Through](../../tree/be63dbdfe840629364becf6380f
 Ver.29   [Cart in a CBV & Django Sessions](../../tree/60b068bc51fe7b51667d9e884cb399f25d828fbf)
 
 Ver.30   [Render Cart View](../../tree/f13d068a9854c2304c0849605a0ca33ac414fbf9)
+
+Ver.31   [Add to Cart & Update Cart View](../../tree/386d37dbfdc1a17ff07d70869e3b512584b56db7)
