@@ -34,19 +34,16 @@
       data: formData,
       success: function(data) {
         if (data.item_added) {
-          $("#json-message").text("Item Added!");
+          showFlashMessage("Product Added!", 2800);
         } else if (data.item_updated) {
-          $("#json-message").text("Item Updated!");
-        } else {
-          $("#json-message").text("");
+          showFlashMessage("Product Updated!", 2800);
         };
+
       },
       error: function(response, error) {
-        console.log(response);
-        console.log(error);
+        $("#add-form").submit();
       }
     })
-    // $("#add-form").submit();
   })
 {% endblock %}
 </script>
@@ -73,7 +70,6 @@
   	<h3 id="price">$ {{ object.price }}</h3>
 
     <form id="add-form" method="GET" action="{% url 'cart' %}">
-      <p id="json-message" class="lead"></p>
   {% if object.variation_set.count > 0 %}
 
       <select name="item_id" class="form-control variation_select">
