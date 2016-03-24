@@ -94,3 +94,5 @@ Ver.31   [Add to Cart & Update Cart View](../../tree/386d37dbfdc1a17ff07d70869e3
 Ver.32   [Cart Line Item Total & Subtotal](../../tree/599e35fd57be23704076e7771026460bf9f37253)
 
 Ver.33   [Ajax](../../tree/d460896f40e8a707bc12e1394c1c9f55c83b983b)
+
+Ver.34   [jQuery Flash Message](../../tree/cbb0152063a9cc75dad7717384bca10355e4d937)
