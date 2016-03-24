@@ -96,3 +96,5 @@ Ver.32   [Cart Line Item Total & Subtotal](../../tree/599e35fd57be23704076e77710
 Ver.33   [Ajax](../../tree/d460896f40e8a707bc12e1394c1c9f55c83b983b)
 
 Ver.34   [jQuery Flash Message](../../tree/cbb0152063a9cc75dad7717384bca10355e4d937)
+
+Ver.35   [Display Message from Server](../../tree/ae5003710564b1b86134fd64c9a2155967642f33)
