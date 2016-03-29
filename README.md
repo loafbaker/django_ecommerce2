@@ -106,3 +106,5 @@ Ver.37   [Cart Count in Navbar](../../tree/fde5a942ae6574a2e5868b8c742e8cf6fc7fe
 Ver.38   [Cart Total & Taxes](../../tree/9395fe3dea0e5939d155a02f4049f6ddd8e53bae)
 
 Ver.39   [Checkout View](../../tree/9b03250d702f81a03fc52b134af93be7c459e3bf)
+
+Ver.40   [Orders App & Checkout for Guest](../../tree/14c7ee66a9528aa2cf0cde3c4026946045b530d6)
