@@ -102,3 +102,5 @@ Ver.35   [Display Message from Server](../../tree/ae5003710564b1b86134fd64c9a215
 Ver.36   [Empty Cart](../../tree/6b32822ee3cbb97c085963f0671bcc55e8465c6c)
 
 Ver.37   [Cart Count in Navbar](../../tree/fde5a942ae6574a2e5868b8c742e8cf6fc7fe7ed)
+
+Ver.38   [Cart Total & Taxes](../../tree/9395fe3dea0e5939d155a02f4049f6ddd8e53bae)
