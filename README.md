@@ -110,3 +110,5 @@ Ver.39   [Checkout View](../../tree/9b03250d702f81a03fc52b134af93be7c459e3bf)
 Ver.40   [Orders App & Checkout for Guest](../../tree/14c7ee66a9528aa2cf0cde3c4026946045b530d6)
 
 Ver.41   [UserAddress Model & View](../../tree/275df9629cca1d96bb29911555fec5c2f13e2021)
+
+Ver.42   [Order Model](../../tree/49ca84365d3bd84b586b2049b2e5dab278b39eb8)

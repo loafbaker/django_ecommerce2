@@ -73,42 +73,50 @@
     {% include 'carts/empty_cart.html' %}
 
   {% else %}
-
-  <table class="table">
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th class="text-right">Total</th>
-      <th class="text-center">Remove</th>
-    </tr>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h1>Your Cart</h1>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th class="text-right">Total</th>
+          <th class="text-center">Remove</th>
+        </tr>
     {% for cartitem in object.cartitem_set.all %}
-    <tr id="item-{{ cartitem.item.id }}">
-  	  <td>{{ cartitem.item.get_title }}</td>
-      <td>
-        <form method="GET" action="">
-          <input type="hidden" name="item_id" value="{{ cartitem.item.id }}" />
-          <input type="number" name="qty" class="item-qty" value="{{ cartitem.quantity }}" />
-          <input type="hidden" name="update" value="true" />
+        <tr id="item-{{ cartitem.item.id }}">
+      	  <td>{{ cartitem.item.get_title }}</td>
+          <td>
+            <form method="GET" action="">
+              <input type="hidden" name="item_id" value="{{ cartitem.item.id }}" />
+              <input type="number" name="qty" class="item-qty" value="{{ cartitem.quantity }}" />
+              <input type="hidden" name="update" value="true" />
           <input type="submit" class="btn btn-link btn-update" value="Update" style="display:none;" />
-        </form>
-      </td>
-      <td id="item-line-total-{{ cartitem.item.id }}" class="text-right">{{ cartitem.line_item_total }}</td>
-      <td class="text-center"><a href="{{ cartitem.remove_url }}" class="item-del">X</a></td>
-    </tr>
+            </form>
+          </td>
+          <td id="item-line-total-{{ cartitem.item.id }}" class="text-right">{{ cartitem.line_item_total }}</td>
+          <td class="text-center"><a href="{{ cartitem.remove_url }}" class="item-del">X</a></td>
+        </tr>
     {% endfor %}
-    <tr>
-      <td colspan="3" class="text-right"><strong>Subtotal:</strong> <span id="cart-subtotal">{{ object.subtotal }}</span></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan="3" class="text-right"><strong>Tax (Estimated):</strong> <span id="cart-tax-total">{{ object.tax_total }}</span></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan="3" class="text-right"><strong>Total:</strong> <span id="cart-total">{{ object.total }}</span></td>
-      <td>&nbsp;</td>
-    </tr>
-  </table>
+        <tr>
+          <td colspan="3" class="text-right"><strong>Subtotal:</strong> <span id="cart-subtotal">{{ object.subtotal }}</span></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3" class="text-right"><strong>Tax (Estimated):</strong> <span id="cart-tax-total">{{ object.tax_total }}</span></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3" class="text-right"><strong>Total:</strong> <span id="cart-total">{{ object.total }}</span></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3" class="text-right"><a class="btn btn-warning" href="{% url 'checkout' %}">Checkout</a></td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
 {% endif %}
 
