@@ -5,6 +5,8 @@ from django.db import models
 
 # Create your models here.
 
+from carts.models import Cart
+
 ADDRESS_TYPE = (
     ('billing', 'Billing'),
     ('shipping', 'Shipping'),
@@ -30,11 +32,13 @@ class UserAddress(models.Model):
         return self.street
 
 
-# class Order(models.Model):
-    # cart
-    # usercheckout
-    # shipping address
-    # billing address
-    # shipping total price
-    # order total price
-    # order number
+class Order(models.Model):
+    cart = models.OneToOneField(Cart)
+    user_checkout = models.ForeignKey(UserCheckout)
+    shipping_address = models.ForeignKey(UserAddress, related_name='shipping_address')
+    billing_address = models.ForeignKey(UserAddress, related_name='billing_address')
+    shipping_total_price = models.DecimalField(decimal_places=2, max_digits=50, default=0.00)
+    order_price = models.DecimalField(decimal_places=2, max_digits=50, default=0.00)
+
+    def __unicode__(self):
+        return str(self.cart.id)
