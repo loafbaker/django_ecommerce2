@@ -114,3 +114,5 @@ Ver.41   [UserAddress Model & View](../../tree/275df9629cca1d96bb29911555fec5c2f
 Ver.42   [Order Model](../../tree/49ca84365d3bd84b586b2049b2e5dab278b39eb8)
 
 Ver.43   [Crafting the Order](../../tree/39f1c4d98ed6133508a1fa78ea413ca70de63f11)
+
+Ver.44   [Custom Mixin for Cart & Order](../../tree/d1902ef3c7c70d0e73132d1f69cfbc9f52b1a939)

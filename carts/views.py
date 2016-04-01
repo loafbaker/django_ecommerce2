@@ -121,7 +121,7 @@ class CartView(SingleObjectMixin, View):
             return redirect('cart')
         return render(request, template, context)
 
-class CheckoutView(DetailView, FormMixin, CartOrderMixin):
+class CheckoutView(FormMixin, CartOrderMixin, DetailView):
     model = Cart
     template_name = 'carts/checkout_view.html'
     form_class = GuestCheckoutForm
@@ -190,3 +190,22 @@ class CheckoutView(DetailView, FormMixin, CartOrderMixin):
         new_order.user_checkout = user_checkout
         new_order.save()
         return get_data
+
+class CheckoutFinalView(CartOrderMixin, View):
+    def post(self, request, *args, **kwargs):
+        order = self.get_order()
+        if order.cart.cartitem_set.count == 0:
+            return reverse('cart')
+        # Validate payment
+        if request.POST.get('payment_token') == 'ABC':
+            order.mark_completed()
+            del request.session['cart_id']
+            del request.session['order_id']
+        if request.user.is_authenticated():
+            return redirect('orders')
+        else:
+            messages.success(request, 'Your order has been completed.')
+            return redirect('checkout')
+
+    def get(self, request, *args, **kwargs):
+        return redirect('orders')
