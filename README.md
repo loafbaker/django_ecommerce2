@@ -116,3 +116,5 @@ Ver.42   [Order Model](../../tree/49ca84365d3bd84b586b2049b2e5dab278b39eb8)
 Ver.43   [Crafting the Order](../../tree/39f1c4d98ed6133508a1fa78ea413ca70de63f11)
 
 Ver.44   [Custom Mixin for Cart & Order](../../tree/d1902ef3c7c70d0e73132d1f69cfbc9f52b1a939)
+
+Ver.45   [Checkout Finalize View & Order List](../../tree/231f5b2efc49287d8dddd41daa88b2dcae1141ed)
