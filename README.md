@@ -127,3 +127,5 @@ Ver.44   [Custom Mixin for Cart & Order](../../tree/d1902ef3c7c70d0e73132d1f69cf
 Ver.45   [Checkout Finalize View & Order List](../../tree/231f5b2efc49287d8dddd41daa88b2dcae1141ed)
 
 Ver.46   [Order Detail](../../tree/c0c0e1f1801b8deebbd0118985e74032ea1fff37)
+
+Ver.47   [Braintree & Customer ID](../../tree/97a70d970229da1bebab0c3b214813d38dd5873d)

@@ -145,6 +145,10 @@ class CheckoutView(FormMixin, CartOrderMixin, DetailView):
                 user_checkout.user = self.request.user
                 user_checkout.save()
             self.request.session['user_checkout_id'] = user_checkout.id
+            context['client_token'] = user_checkout.get_client_token()
+        elif user_checkout_id:
+            user_checkout = UserCheckout.objects.get(id=user_checkout_id)
+            context['client_token'] = user_checkout.get_client_token()
         context['order'] = self.get_order()
         context['form'] = self.get_form()
         return context
