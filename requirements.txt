@@ -1,3 +1,4 @@
+braintree==3.25.0
 Django==1.9.4
 django-crispy-forms==1.6.0
 django-registration-redux==1.4

@@ -27,6 +27,13 @@ Run web server
 
 Finally, you can view the web app with your local browser by accessing http://localhost:8000/
 
+Note: if you want to run on Braintree application, you have to replace the following variable definition with your own Braintree API keys.
+
+    BRAINTREE_PUBLIC = 'your-braintree-public-key'
+    BRAINTREE_PRIVATE = 'your-braintree-private-key'
+    BRAINTREE_MERCHANT_ID = 'your-braintree-merchant-id'
+    BRAINTREE_ENVIRONMENT = 'Sandbox-or-Production'
+
 # Version Control
 
 Ver.1   [Basic Template](../../tree/086876c197cec682ba202168e2260eda4a942be9)
@@ -118,3 +125,5 @@ Ver.43   [Crafting the Order](../../tree/39f1c4d98ed6133508a1fa78ea413ca70de63f1
 Ver.44   [Custom Mixin for Cart & Order](../../tree/d1902ef3c7c70d0e73132d1f69cfbc9f52b1a939)
 
 Ver.45   [Checkout Finalize View & Order List](../../tree/231f5b2efc49287d8dddd41daa88b2dcae1141ed)
+
+Ver.46   [Order Detail](../../tree/c0c0e1f1801b8deebbd0118985e74032ea1fff37)

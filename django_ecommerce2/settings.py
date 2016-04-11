@@ -165,3 +165,12 @@ REGISTRATION_AUTO_LOGIN = True
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
+
+#Braintree Payment Details
+try:
+    from .settings_braintree import *
+except:
+    BRAINTREE_PUBLIC = 'your1own1public1'
+    BRAINTREE_PRIVATE = 'your1own1public1id12345678901234'
+    BRAINTREE_MERCHANT_ID = 'merchant1id12345'
+    BRAINTREE_ENVIRONMENT = 'Sandbox'
