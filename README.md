@@ -129,3 +129,5 @@ Ver.45   [Checkout Finalize View & Order List](../../tree/231f5b2efc49287d8dddd4
 Ver.46   [Order Detail](../../tree/c0c0e1f1801b8deebbd0118985e74032ea1fff37)
 
 Ver.47   [Braintree & Customer ID](../../tree/97a70d970229da1bebab0c3b214813d38dd5873d)
+
+Ver.48   [Braintree Instance Methods](../../tree/cd80ba62037eff4767031983e5f74ac8e7252dd5)
