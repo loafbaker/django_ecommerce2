@@ -27,12 +27,28 @@ Run web server
 
 Finally, you can view the web app with your local browser by accessing http://localhost:8000/
 
-Note: if you want to run on Braintree application, you have to replace the following variable definition with your own Braintree API keys.
+# Private Settings
 
-    BRAINTREE_PUBLIC = 'your-braintree-public-key'
-    BRAINTREE_PRIVATE = 'your-braintree-private-key'
-    BRAINTREE_MERCHANT_ID = 'your-braintree-merchant-id'
-    BRAINTREE_ENVIRONMENT = 'Sandbox-or-Production'
+Before you enable all the functions in django_ecommerce2, you have to reset a few parameters in the setting file `django_ecommerce2/settings.py`.
+
+1. If you want to activate the email function for your server, you need to refill your own parameters for the following line codes.
+
+```python
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yourgmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+```
+
+2. if you want to run on Braintree application, you have to replace the following definitions with your own Braintree API keys.
+
+```python
+BRAINTREE_PUBLIC = 'your-braintree-public-key'
+BRAINTREE_PRIVATE = 'your-braintree-private-key'
+BRAINTREE_MERCHANT_ID = 'your-braintree-merchant-id'
+BRAINTREE_ENVIRONMENT = 'Sandbox-or-Production'
+```
 
 # Version Control
 
@@ -133,3 +149,7 @@ Ver.47   [Braintree & Customer ID](../../tree/97a70d970229da1bebab0c3b214813d38d
 Ver.48   [Braintree Instance Methods](../../tree/cd80ba62037eff4767031983e5f74ac8e7252dd5)
 
 Ver.49   [Run Braintree Transaction](../../tree/60f16abaff5189fbce4b6765c1f6f7890aba236c)
+
+Ver.50   [UI Updates](../../tree/eb384f243449f53153ca342987673a1eefe895e7)
+
+Current Ver.   Advanced Filter for Product List
