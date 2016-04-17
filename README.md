@@ -160,4 +160,6 @@ Ver.53   [REST framework Installation](../../tree/c06ba4568547436707183cf19b9eaf
 
 Ver.54   [Model Serializers & API List View](../../tree/2b5617a6beca64e0e9d8c80530cdb4ef5ae25000)
 
-Current Ver.   API Retrieve View & URL
+Ver.55   [API Retrieve View & URL](../../tree/456ade2ab067edcdc55079516e7d1349b60aeb68)
+
+Current Ver.   Product & Variation Serializers
