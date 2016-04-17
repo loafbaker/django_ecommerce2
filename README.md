@@ -155,3 +155,5 @@ Ver.50   [UI Updates](../../tree/eb384f243449f53153ca342987673a1eefe895e7)
 Ver.51   [Advanced Filter for Product List](../../tree/eb6fa98c41cf82d83194f5fcaa80b7ddc73a325b)
 
 **Release 1   [v1.0](../../tree/v1.0)** _(Stable Ver.)_
+
+Current Ver.   REST framework Installation
