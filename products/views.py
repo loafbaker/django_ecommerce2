@@ -9,11 +9,22 @@ from django_filters import FilterSet, CharFilter, NumberFilter
 import random
 import re
 
+from rest_framework import generics
+
 # Create your views here.
 
 from .models import Product, Variation, Category
 from .forms import ProductFilterForm, VariationInventoryFormSet
 from .mixins import StaffRequiredMixin, FilterMixin
+from .serializers import CategorySerializer
+
+# API CBVs
+
+class CategoryAPIListView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+# CBVs
 
 def price_test(query):
     """

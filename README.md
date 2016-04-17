@@ -156,4 +156,6 @@ Ver.51   [Advanced Filter for Product List](../../tree/eb6fa98c41cf82d83194f5fca
 
 **Release 1   [v1.0](../../tree/v1.0)** _(Stable Ver.)_
 
-Current Ver.   REST framework Installation
+Ver.53   [REST framework Installation](../../tree/c06ba4568547436707183cf19b9eaf4208c64d86)
+
+Current Ver.   Model Serializers & API List View
