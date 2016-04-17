@@ -16,9 +16,17 @@ from rest_framework import generics
 from .models import Product, Variation, Category
 from .forms import ProductFilterForm, VariationInventoryFormSet
 from .mixins import StaffRequiredMixin, FilterMixin
-from .serializers import CategorySerializer
+from .serializers import ProductDetailSerializer, ProductSerializer, CategorySerializer
 
 # API CBVs
+
+class ProductListAPIView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductDetailSerializer
 
 class CategoryListAPIView(generics.ListAPIView):
     queryset = Category.objects.all()
