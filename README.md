@@ -168,4 +168,6 @@ Ver.57   [Product List & Retrieve View](../../tree/0370f3d95472b98bcc6d03837cc43
 
 Ver.58   [Permissions](../../tree/8dc6f528fc552bf361e151a90928b418ccb2b16a)
 
-Current Ver.   Authentication
+Ver.59   [Authentication](../../tree/2cdc011fce2ac35c817cb26c11b88700b9a59d45)
+
+Current Ver.   Pagination

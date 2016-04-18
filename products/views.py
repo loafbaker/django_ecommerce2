@@ -18,6 +18,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Product, Variation, Category
 from .forms import ProductFilterForm, VariationInventoryFormSet
 from .mixins import StaffRequiredMixin, FilterMixin
+from .pagination import ProductPagination, CategoryPagination
 from .serializers import ProductDetailSerializer, ProductSerializer, CategorySerializer
 
 # API CBVs
@@ -36,6 +37,7 @@ class ProductRetrieveAPIView(generics.RetrieveAPIView):
 class CategoryListAPIView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    pagination_class = CategoryPagination
 
 class CategoryRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Category.objects.all()
