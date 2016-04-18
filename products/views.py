@@ -10,6 +10,7 @@ import random
 import re
 
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -25,6 +26,7 @@ class ProductListAPIView(generics.ListAPIView):
     serializer_class = ProductSerializer
 
 class ProductRetrieveAPIView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
 

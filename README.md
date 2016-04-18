@@ -164,4 +164,6 @@ Ver.55   [API Retrieve View & URL](../../tree/456ade2ab067edcdc55079516e7d1349b6
 
 Ver.56   [Product & Variation Serializers](../../tree/a86d1e54537423c6a196f35c19b71ebfa68d2668)
 
-Current Ver.   Product List & Retrieve View
+Ver.57   [Product List & Retrieve View](../../tree/0370f3d95472b98bcc6d03837cc43bbc9de1844b)
+
+Current Ver.   Permissions

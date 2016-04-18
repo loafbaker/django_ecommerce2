@@ -176,3 +176,11 @@ except:
     BRAINTREE_PRIVATE = 'your1own1public1id12345678901234'
     BRAINTREE_MERCHANT_ID = 'merchant1id12345'
     BRAINTREE_ENVIRONMENT = 'Sandbox'
+
+
+# REST Framework Settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    )
+}
