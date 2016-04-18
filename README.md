@@ -166,4 +166,6 @@ Ver.56   [Product & Variation Serializers](../../tree/a86d1e54537423c6a196f35c19
 
 Ver.57   [Product List & Retrieve View](../../tree/0370f3d95472b98bcc6d03837cc43bbc9de1844b)
 
-Current Ver.   Permissions
+Ver.58   [Permissions](../../tree/8dc6f528fc552bf361e151a90928b418ccb2b16a)
+
+Current Ver.   Authentication
