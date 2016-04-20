@@ -174,4 +174,6 @@ Ver.60   [Pagination](../../tree/0a5a48ca4a6d30cb6231fe6ffc0d4c92adb74cc2)
 
 Ver.61   [Filtering the API](../../tree/8cc0b8c64c8ab46570504fe85aceffbc9d86fe07)
 
-Current Ver.   Using a Base API View
+Ver.62   [Using a Base API View](../../tree/fe07b9455b0c91929b105dd5185b436b5346e4d9)
+
+Current Ver.   User Checkout
