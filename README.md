@@ -176,4 +176,6 @@ Ver.61   [Filtering the API](../../tree/8cc0b8c64c8ab46570504fe85aceffbc9d86fe07
 
 Ver.62   [Using a Base API View](../../tree/fe07b9455b0c91929b105dd5185b436b5346e4d9)
 
-Current Ver.   User Checkout
+Ver.63   [User Checkout](../../tree/cf667f6cc6f3c06bd1e00cc3e30eba7310cac957)
+
+Current Ver.   Auth with JWT Tokens
