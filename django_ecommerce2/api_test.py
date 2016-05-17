@@ -9,6 +9,8 @@ products_url = base_url + 'products/'
 
 refresh_url = login_url + 'refresh/'
 
+cart_url = base_url + 'cart/'
+
 # requests.post(login_url, data=None, headers=None, params=None)
 
 # Auth test
@@ -44,3 +46,8 @@ refresh_r = requests.post(refresh_url, data=data)
 print(refresh_r.json())
 
 token = refresh_r.json()['token']
+
+# Cart URL test
+cart_r = requests.get(cart_url)
+
+print(cart_r.json())

@@ -184,4 +184,6 @@ Ver.65   [Testing JWT Tokens with Python Requests](../../tree/56d1b814ecdab374ab
 
 Ver.66   [JWT Tokens Refresh](../../tree/1ce9fa387b8a7494ed67b395ce5c4c36921db943)
 
-Current Ver.   Cart API View & Token
+Ver.67   [Cart API View & Token](../../tree/e35c7b2fee224538bb40699053ff3b1137b605b2)
+
+Current Ver.   Update Cart in API & Test
