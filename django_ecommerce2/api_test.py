@@ -7,6 +7,8 @@ login_url = base_url + 'auth/token/'
 
 products_url = base_url + 'products/'
 
+refresh_url = login_url + 'refresh/'
+
 # requests.post(login_url, data=None, headers=None, params=None)
 
 # Auth test
@@ -31,3 +33,14 @@ p_r = requests.get(products_url, headers=headers)
 
 prod_json_data = p_r.json()
 print (json.dumps(prod_json_data, indent=2))
+
+# Refresh URL token
+
+data = {
+	'token': token
+}
+refresh_r = requests.post(refresh_url, data=data)
+
+print(refresh_r.json())
+
+token = refresh_r.json()['token']
