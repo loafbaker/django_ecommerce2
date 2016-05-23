@@ -186,4 +186,6 @@ Ver.66   [JWT Tokens Refresh](../../tree/1ce9fa387b8a7494ed67b395ce5c4c36921db94
 
 Ver.67   [Cart API View & Token](../../tree/e35c7b2fee224538bb40699053ff3b1137b605b2)
 
-Current Ver.   Update Cart in API & Test
+Ver.68   [Update Cart in API & Test](../../tree/6348aeba99ed187ee1d695ae647a93f081365e27)
+
+Current Ver.   Display Cart Items
