@@ -188,4 +188,6 @@ Ver.67   [Cart API View & Token](../../tree/e35c7b2fee224538bb40699053ff3b1137b6
 
 Ver.68   [Update Cart in API & Test](../../tree/6348aeba99ed187ee1d695ae647a93f081365e27)
 
-Current Ver.   Display Cart Items
+Ver.69   [Display Cart Items](../../tree/dc68726411c0f48d76852e83a9ad477f7a625b9c)
+
+Current Ver.   Token Mixin
