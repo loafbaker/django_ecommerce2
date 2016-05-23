@@ -25,6 +25,7 @@ from . import views as main_views
 
 from carts.views import (
         CartAPIView,
+        CheckoutAPIView,
     )
 
 from orders.views import (
@@ -56,6 +57,7 @@ urlpatterns = [
 urlpatterns += [
     url(r'^api/$', APIHomeView.as_view(), name='home_api'),
     url(r'^api/cart/$', CartAPIView.as_view(), name='cart_api'),
+    url(r'^api/checkout/$', CheckoutAPIView.as_view(), name='checkout_api'),
     url(r'^api/auth/token/$', obtain_jwt_token),
     url(r'^api/auth/token/refresh/$', refresh_jwt_token),
     url(r'^api/user/checkout/$', UserCheckoutAPI.as_view(), name='user_checkout_api'),

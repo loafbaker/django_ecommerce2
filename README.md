@@ -190,4 +190,6 @@ Ver.68   [Update Cart in API & Test](../../tree/6348aeba99ed187ee1d695ae647a93f0
 
 Ver.69   [Display Cart Items](../../tree/dc68726411c0f48d76852e83a9ad477f7a625b9c)
 
-Current Ver.   Token Mixin
+Ver.70   [Token Mixin](../../tree/9b90e8c87717f268f5a9945c631d7ff8bd2285d5)
+
+Current Ver.   Initiate Checkout API View & CartToken Mixin
