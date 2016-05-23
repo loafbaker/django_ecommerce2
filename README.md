@@ -192,4 +192,6 @@ Ver.69   [Display Cart Items](../../tree/dc68726411c0f48d76852e83a9ad477f7a625b9
 
 Ver.70   [Token Mixin](../../tree/9b90e8c87717f268f5a9945c631d7ff8bd2285d5)
 
-Current Ver.   Initiate Checkout API View & CartToken Mixin
+Ver.71   [Initiate Checkout API View & CartToken Mixin](../../tree/9849d08259615f80c891431caedeb1fdcb6e3946)
+
+Current Ver.   Order Serializer & Add User to Checkout
