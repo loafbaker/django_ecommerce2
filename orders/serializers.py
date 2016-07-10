@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Order
+from .models import UserAddress, Order
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -19,3 +19,15 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_subtotal(self, obj):
         return obj.cart.subtotal
+
+
+class UserAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAddress
+        fields = [
+            'user_checkout',
+            'type',
+            'street',
+            'city',
+            'zipcode',
+        ]
