@@ -196,4 +196,6 @@ Ver.71   [Initiate Checkout API View & CartToken Mixin](../../tree/9849d08259615
 
 Ver.72   [Order Serializer & Add User to Checkout](../../tree/bc79d4764095c6eef57b0137bb32906472761174)
 
-Current Ver.   User Address Create & List
+Ver.73   [User Address Create & List](../../tree/292551d06c09afa134d5a55ca785600547dd407c)
+
+Current Ver.   Finalize Checkout API View

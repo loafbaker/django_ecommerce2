@@ -18,7 +18,7 @@ from rest_framework.views import APIView
 
 from orders.forms import GuestCheckoutForm
 from orders.mixins import CartOrderMixin
-from orders.models import UserCheckout, Order
+from orders.models import UserAddress, UserCheckout, Order
 from orders.serializers import OrderSerializer
 from products.models import Variation
 from .mixins import CartTokenMixin
@@ -106,10 +106,18 @@ class CartAPIView(CartTokenMixin, APIView):
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 class CheckoutAPIView(CartTokenMixin, APIView):
-
+    """
+    Currently, this API only supports user checkout token method, instead of user authenticate method
+    """
     def get(self, request, format=None):
         # ensure user checkout is required
-        user_checkout_id = request.GET.get('checkout_id')
+        user_checkout_token = self.request.GET.get('user_checkout_token')
+        try:
+            user_checkout_data = self.parse_token(user_checkout_token)
+            user_checkout_id = user_checkout_data.get('user_checkout_id')
+        except:
+            user_checkout_id = None
+
         try:
             user_checkout = UserCheckout.objects.get(id=user_checkout_id)
         except:
@@ -143,6 +151,42 @@ class CheckoutAPIView(CartTokenMixin, APIView):
                         'message': 'This order has been paid(complete).',
                     }
                     return Response(data)
+
+                # billing and shipping address
+                billing_address_id = self.request.GET.get('billing_address_id')
+                shipping_address_id = self.request.GET.get('shipping_address_id')
+                try:
+                    billing_address = UserAddress.objects.get(user_checkout=user_checkout, type='billing', id=int(billing_address_id))
+                except:
+                    billing_address = None
+                try:
+                    shipping_address = UserAddress.objects.get(user_checkout=user_checkout, type='shipping', id=int(shipping_address_id))
+                except:
+                    shipping_address = None
+
+                if billing_address:
+                    order.billing_address = billing_address
+                    order.save()
+                if shipping_address:
+                    order.shipping_address = shipping_address
+                    order.save()
+
+                if (order.billing_address is None) and (order.shipping_address is None):
+                    data = {
+                        'message': 'The billing address and shipping address are missing. Please add valid addresses to make the order.',
+                    }
+                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
+                elif order.billing_address is None:
+                    data = {
+                        'message': 'The billing address is missing. Please add valid address to make the order.',
+                    }
+                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
+                elif order.shipping_address is None:
+                    data = {
+                        'message': 'The shipping address is missing. Please add valid address to make the order.',
+                    }
+                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
                 data = OrderSerializer(order).data
                 return Response(data)
         else:

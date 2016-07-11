@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.utils.decorators import method_decorator
 
+from carts.mixins import TokenMixin
 from carts.models import Cart
 from .models import UserCheckout, Order
 
@@ -10,7 +11,7 @@ User = get_user_model()
 
 # API Mixins
 
-class UserCheckoutAPIMixin(object):
+class UserCheckoutAPIMixin(TokenMixin):
     def user_failure(self, message=None):
         data = {
             'message': 'There was an error. Please try again.',
@@ -48,10 +49,16 @@ class UserCheckoutAPIMixin(object):
             data = self.user_failure()
 
         if user_checkout:
-            data['token'] = user_checkout.get_client_token()
+            data['success'] = True
             data['braintree_id'] = user_checkout.braintree_id
             data['user_checkout_id'] = user_checkout.id
-            data['success'] = True
+            # Create custom token
+            data['user_checkout_token'] = self.create_token(data)
+            # Do not show extra data for user checkout
+            del data['braintree_id']
+            del data['user_checkout_id']
+            # Auxiliary token
+            data['braintree_client_token'] = user_checkout.get_client_token()
         return data
 
 # Mixins

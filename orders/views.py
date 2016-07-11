@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 
 # Create your views here.
 
+from carts.mixins import TokenMixin
 from .forms import AddressForm, UserAddressForm
 from .mixins import UserCheckoutAPIMixin, LoginRequiredMixin, CartOrderMixin, UserCheckoutMixin
 from .models import UserCheckout, UserAddress, Order
@@ -36,13 +37,21 @@ class UserAddressCreateAPIView(CreateAPIView):
     serializer_class = UserAddressSerializer
 
 
-class UserAddressListAPIView(ListAPIView):
+class UserAddressListAPIView(TokenMixin, ListAPIView):
+    """
+    N.B. User authenticate method is prior to the user checkout ID method
+    """
     model = UserAddress
     queryset = UserAddress.objects.all()
     serializer_class = UserAddressSerializer
 
     def get_queryset(self, *args, **kwargs):
-        user_checkout_id = self.request.GET.get('user_checkout_id')
+        user_checkout_token = self.request.GET.get('user_checkout_token')
+        try:
+            user_checkout_data = self.parse_token(user_checkout_token)
+            user_checkout_id = user_checkout_data.get('user_checkout_id')
+        except:
+            user_checkout_id = None
         if self.request.user.is_authenticated():
             return UserAddress.objects.filter(user_checkout__user=self.request.user)
         elif user_checkout_id:
