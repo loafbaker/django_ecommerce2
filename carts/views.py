@@ -23,7 +23,7 @@ from orders.serializers import OrderSerializer
 from products.models import Variation
 from .mixins import CartTokenMixin
 from .models import Cart, CartItem
-from .serializers import CartItemSerializer
+from .serializers import CartItemSerializer, CheckoutSerializer
 
 # Braintree settings
 if settings.DEBUG:
@@ -109,6 +109,14 @@ class CheckoutAPIView(CartTokenMixin, APIView):
     """
     Currently, this API only supports user checkout token method, instead of user authenticate method
     """
+    def post(self, request, format=None):
+        data = request.data
+        serializer = CheckoutSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            print serializer.data
+            # TODO: Handle checkout data and save it in database
+        return Response(data)
+
     def get(self, request, format=None):
         # ensure user checkout is required
         user_checkout_token = self.request.GET.get('user_checkout_token')

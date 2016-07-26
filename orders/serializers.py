@@ -25,9 +25,11 @@ class UserAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAddress
         fields = [
+            'id',
             'user_checkout',
             'type',
             'street',
             'city',
+            'state',
             'zipcode',
         ]

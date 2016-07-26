@@ -56,7 +56,6 @@ class UserCheckoutAPIMixin(TokenMixin):
             data['user_checkout_token'] = self.create_token(data)
             # Do not show extra data for user checkout
             del data['braintree_id']
-            del data['user_checkout_id']
             # Auxiliary token
             data['braintree_client_token'] = user_checkout.get_client_token()
         return data
