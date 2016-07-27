@@ -154,15 +154,41 @@ class CheckoutAPIView(TokenMixin, APIView):
         return Response(data)
 
 
-class CheckoutFinalizeAPIView(APIView):
+class CheckoutFinalizeAPIView(TokenMixin, APIView):
     """
     API key:
       (Required) order_token, nonce
       (Not Required) order_id, user_checkout_id
     Allow:
-      POST
+      GET, POST
     N.B. Currently, this API only supports user checkout token method, instead of user authenticate method
     """
+    def get(self, request, format=None):
+        order_token = request.GET.get('order_token')
+        if order_token:
+            try:
+                order_data = self.parse_token(order_token)
+                user_checkout_id = order_data.get('user_checkout_id')
+            except:
+                user_checkout_id = None
+
+            if user_checkout_id:
+                user_checkout = UserCheckout.objects.get(id=user_checkout_id)
+                client_token = user_checkout.get_client_token()
+                data = {
+                    'braintree_client_token': client_token,
+                }
+            else:
+                data = {
+                    'message': 'The order token is invalid.'
+                }
+            return Response(data)
+        else:
+            data = {
+                'message': 'The method is now allowed without parameters.'
+            }
+            return Response(data, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
     def post(self, request, format=None):
         data = request.data
         serializer = FinalizeOrderSerializer(data=data)
