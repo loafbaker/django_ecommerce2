@@ -19,7 +19,7 @@ from rest_framework.views import APIView
 from orders.forms import GuestCheckoutForm
 from orders.mixins import CartOrderMixin
 from orders.models import UserAddress, UserCheckout, Order
-from orders.serializers import OrderSerializer
+from orders.serializers import FinalizeOrderSerializer
 from products.models import Variation
 from .mixins import TokenMixin, CartTokenMixin
 from .models import Cart, CartItem
@@ -151,6 +151,77 @@ class CheckoutAPIView(TokenMixin, APIView):
                 data = {
                     'order_token': order_token,
                 }
+        return Response(data)
+
+
+class CheckoutFinalizeAPIView(APIView):
+    """
+    API key:
+      (Required) order_token, nonce
+      (Not Required) order_id, user_checkout_id
+    Allow:
+      POST
+    N.B. Currently, this API only supports user checkout token method, instead of user authenticate method
+    """
+    def post(self, request, format=None):
+        data = request.data
+        serializer = FinalizeOrderSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            # Handle order data and the nonce
+            data = serializer.data
+            order_id = data.get('order_id')
+            nonce = data.get('payment_method_nonce')
+            # Get the order
+            order = Order.objects.get(id=order_id)
+            order_price = order.order_price
+            if order.is_paid:
+                data = {
+                    'message': 'The order has been paid(complete).',
+                    'success': False,
+                }
+            elif order_price <= 0.00:
+                data = {
+                    'message': 'The order has some bad data and thus cannot complete.',
+                    'success': False,
+                }
+            else:
+                # The normal case with valid order and nonce
+                # Validate payment
+                result = braintree.Transaction.sale({
+                    'amount': str(order_price),
+                    'payment_method_nonce': nonce,
+                    'billing': {
+                        'street_address': order.billing_address.street,
+                        'locality': order.billing_address.city,
+                        'region': order.billing_address.state,
+                        'postal_code': order.billing_address.zipcode,
+                        'country_code_alpha2': 'US'  # default country
+                    },
+                    'shipping': {
+                        'street_address': order.shipping_address.street,
+                        'locality': order.shipping_address.city,
+                        'region': order.shipping_address.state,
+                        'postal_code': order.shipping_address.zipcode,
+                        'country_code_alpha2': 'US'  # default country
+                    },
+                    'options': {
+                        'submit_for_settlement': True
+                    }
+                })
+                if result.is_success:
+                    # Add result.transaction.id to order
+                    order.mark_paid(result.transaction.id)
+                    data = {
+                        'order_id': order_id,
+                        'transaction_id': order.transaction_id,
+                        'message': 'Your order has been completed.',
+                        'success': True,
+                    }
+                else:
+                    data = {
+                        'message': result.message,
+                        'success': False,
+                    }
         return Response(data)
 
 # CBVs

@@ -204,4 +204,6 @@ Ver.75   [Custom Serializer & Validation & API Test for Checkout](../../tree/bda
 
 Ver.76   [Order from Validated Data](../../tree/48d3bb10c78a7c3c3a4d03e80ae310dccc45d404)
 
-Current Ver.   Finalize Order Serializer
+Ver.77   [Finalize Order Serializer](../../tree/227fabdf8b8dde7a34081baa369ea2648b1eb600)
+
+Current Ver.   Finalize Order API View
