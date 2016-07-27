@@ -21,7 +21,7 @@ from orders.mixins import CartOrderMixin
 from orders.models import UserAddress, UserCheckout, Order
 from orders.serializers import OrderSerializer
 from products.models import Variation
-from .mixins import CartTokenMixin
+from .mixins import TokenMixin, CartTokenMixin
 from .models import Cart, CartItem
 from .serializers import CartItemSerializer, CheckoutSerializer
 
@@ -105,100 +105,53 @@ class CartAPIView(CartTokenMixin, APIView):
             }
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
-class CheckoutAPIView(CartTokenMixin, APIView):
+class CheckoutAPIView(TokenMixin, APIView):
     """
-    Currently, this API only supports user checkout token method, instead of user authenticate method
+    API key:
+      (Required) user_checkout_token, cart_token, billing_address_id, shipping_address_id
+      (Not Required) user_checkout_id, cart_id
+    Allow:
+      POST
+    N.B. Currently, this API only supports user checkout token method, instead of user authenticate method
     """
     def post(self, request, format=None):
         data = request.data
         serializer = CheckoutSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
-            print serializer.data
-            # TODO: Handle checkout data and save it in database
-        return Response(data)
-
-    def get(self, request, format=None):
-        # ensure user checkout is required
-        user_checkout_token = self.request.GET.get('user_checkout_token')
-        try:
-            user_checkout_data = self.parse_token(user_checkout_token)
-            user_checkout_id = user_checkout_data.get('user_checkout_id')
-        except:
-            user_checkout_id = None
-
-        try:
+            # Handle checkout data and save it in database
+            data = serializer.data
+            user_checkout_id = data.get('user_checkout_id')
+            cart_id = data.get('cart_id')
+            billing_address_id = data.get('billing_address_id')
+            shipping_address_id = data.get('shipping_address_id')
+            # Data has been validate
             user_checkout = UserCheckout.objects.get(id=user_checkout_id)
-        except:
-            user_checkout = None
-        if user_checkout is None:
-            data = {
-                'message': 'Your user account is not authenticated.'
-            }
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
-
-        data, cart_obj = self.get_ctxdata_with_cart('cart_token')
-        get_data_succeed = data.get('success')
-        if get_data_succeed:
-            if cart_obj.cartitem_set.count() == 0:
+            cart_obj = Cart.objects.get(id=cart_id)
+            billing_address = UserAddress.objects.get(id=billing_address_id)
+            shipping_address = UserAddress.objects.get(id=shipping_address_id)
+            # Create a new order
+            order, created = Order.objects.get_or_create(cart=cart_obj, user_checkout=user_checkout)
+            if order.is_paid:
                 data = {
-                    'message': 'Your cart is empty.'
+                    'message': 'This order has been paid(complete).',
                 }
-                return Response(data, status=status.HTTP_400_BAD_REQUEST)
             else:
-                order, created = Order.objects.get_or_create(cart=cart_obj)
-                if created or (not order.user_checkout):
-                    order.user_checkout = user_checkout
-                    order.save()
-                if order.user_checkout != user_checkout:
-                    data = {
-                        'message': 'There was some errors with user authentication. Please check your user account.',
-                    }
-                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
-                if order.is_paid:
-                    data = {
-                        'message': 'This order has been paid(complete).',
-                    }
-                    return Response(data)
-
-                # billing and shipping address
-                billing_address_id = self.request.GET.get('billing_address_id')
-                shipping_address_id = self.request.GET.get('shipping_address_id')
-                try:
-                    billing_address = UserAddress.objects.get(user_checkout=user_checkout, type='billing', id=int(billing_address_id))
-                except:
-                    billing_address = None
-                try:
-                    shipping_address = UserAddress.objects.get(user_checkout=user_checkout, type='shipping', id=int(shipping_address_id))
-                except:
-                    shipping_address = None
-
-                if billing_address:
-                    order.billing_address = billing_address
-                    order.save()
-                if shipping_address:
-                    order.shipping_address = shipping_address
-                    order.save()
-
-                if (order.billing_address is None) and (order.shipping_address is None):
-                    data = {
-                        'message': 'The billing address and shipping address are missing. Please add valid addresses to make the order.',
-                    }
-                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
-                elif order.billing_address is None:
-                    data = {
-                        'message': 'The billing address is missing. Please add valid address to make the order.',
-                    }
-                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
-                elif order.shipping_address is None:
-                    data = {
-                        'message': 'The shipping address is missing. Please add valid address to make the order.',
-                    }
-                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
-
-                data = OrderSerializer(order).data
-                return Response(data)
-        else:
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+                # Save addresses
+                order.billing_address = billing_address
+                order.shipping_address = shipping_address
+                order.save()
+                # Create order token
+                order_data = {
+                    'order_id': order.id,
+                    'user_checkout_id': user_checkout_id,
+                    'cart_id': cart_id,
+                }
+                order_token = self.create_token(order_data)
+                # Response data
+                data = {
+                    'order_token': order_token,
+                }
+        return Response(data)
 
 # CBVs
 
