@@ -19,6 +19,8 @@ user_address_create_url = user_address_url + 'create/'
 
 checkout_url = base_url + 'checkout/'
 
+checkout_finalize_url = checkout_url + 'finalize/'
+
 # requests.post(login_url, data=None, headers=None, params=None)
 
 def user_product_api_test():
@@ -159,8 +161,86 @@ def checkout_api_test(email=None, user_auth=None):
         print(data)
         order_r = requests.post(checkout_url, data=data)
         print(order_r.text)
+        order_token = order_r.json()['order_token']
+        return order_token
+    else:
+        return None
+
+def checkout_finalize_api_test(order_token):
+    new_checkout_finalize_url = checkout_finalize_url + '?order_token=' + order_token
+    new_checkout_finalize_r = requests.get(new_checkout_finalize_url)
+    print(new_checkout_finalize_r.text)
+    braintree_client_token = new_checkout_finalize_r.json()['braintree_client_token']
+    return braintree_client_token
+
+
+def write_payment_test_page(braintree_client_token, filename='api_test_payment.html'):
+    base_file_content = \
+"""
+<!DOCTYPE html>
+<!-- Run python local server with 'python -m SimpleHTTPServer 8080' -->
+<!-- Then run open this payment test page in a modern browser -->
+<!-- http://localhost:8080/api_test_payment.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <title>API Test Payment</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Payment test</h1>
+    <form id="checkout"  method="POST" action=".">
+      <div id="payment-form"></div>
+      <input type="submit" value="Pay test" class="btn btn-default">
+    </form>
+  </div> <!-- /container -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>
+  var clientToken = "%s";
+  braintree.setup(clientToken, "dropin", {
+    container: "payment-form",
+    onPaymentMethodReceived: function (obj) {
+      console.log(obj.nonce)
+    }
+  });
+  </script>
+</body>
+</html>
+"""
+    f = open(filename, 'w')
+    f.write(base_file_content % braintree_client_token)
+    f.close()
+    print('File %s is written. Finish online payment through a browser' % filename)
 
 
 if __name__ == '__main__':
+    # 0. Utilities test
     # user_product_api_test()
-    checkout_api_test(email='dirac@gmail.com')
+    # 1. Get the order_token & braintree client token
+    order_token = checkout_api_test(email='dirac@gmail.com')
+    braintree_client_token = checkout_finalize_api_test(order_token)
+    # 2. Write a HTML file and finish the payment through browser
+    write_payment_test_page(braintree_client_token)
+    # 3. Follow the instructions and finish the test
+    print('First, run python HTTP server')
+    print('\tpython -m SimpleHTTPServer 8080')
+    print('Second, open the local modern browser (firefox, chrome) and open the url')
+    print('\thttp://localhost:8080/api_test_payment.html')
+    print('Third, open the development console in the browser (Press \'F12\' and choose the \'Console\' tab')
+    print('Fourth, finish credit card payment online with test card information')
+    print('\tCard number: 4111 1111 1111 1111')
+    print('\tExpired: (Arbitrary)')
+    print('Fifth, copy the payment method nonce in the console and replace the both json keys below:')
+    print('{')
+    print('    "order_token": "%s",' % order_token)
+    print('    "payment_method_nonce": "<your-own-payment-method-nonce>"')
+    print('}')
+    print('Sixth, post the json data to checkout finalize url (/api/checkout/finalize/).')
+    print('\tIf return data has a \'success\' key of True and a 8-char-long valid \'transaction_id\',')
+    print('\tthen the checkout finalize API test is succeed!')

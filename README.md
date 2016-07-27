@@ -208,4 +208,6 @@ Ver.77   [Finalize Order Serializer](../../tree/227fabdf8b8dde7a34081baa369ea264
 
 Ver.78   [Finalize Order API View](../../tree/601527f7b596b77b593152bc114c8efdd570b3eb)
 
-Current Ver.   Get Client Token
+Ver.79   [Get Client Token](../../tree/1a7d5c95f268569dd23c139e79ee35dab86956b0)
+
+Current Ver.   Payment Transactions
