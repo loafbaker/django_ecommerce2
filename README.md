@@ -210,4 +210,6 @@ Ver.78   [Finalize Order API View](../../tree/601527f7b596b77b593152bc114c8efdd5
 
 Ver.79   [Get Client Token](../../tree/1a7d5c95f268569dd23c139e79ee35dab86956b0)
 
-Current Ver.   Payment Transactions
+Ver.80   [Payment Transactions](../../tree/5b4de4db99402c41f3106def608bd52318371244)
+
+Current Ver.   Django CORS Headers

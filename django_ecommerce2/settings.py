@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     # Third party apps
+    'corsheaders',
     'crispy_forms',
     'django_filters',
     'registration',
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -196,3 +198,11 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30000),
     'JWT_ALLOW_REFRESH': True,
 }
+
+# Django CORS Headers Settings
+
+# CORS_ORIGIN_WHITELIST = ( 'google.com', )
+
+# CORS_ORIGIN_REGEX_WHITELIST = ('^(https?://)?(\w+\.)?google\.com$', )
+
+CORS_URLS_REGEX = r'^/api/.*$'
