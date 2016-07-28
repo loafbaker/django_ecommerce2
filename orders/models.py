@@ -81,7 +81,7 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=20, null=True, blank=True)
 
     def __unicode__(self):
-        return str(self.cart.id)
+        return 'Order %s, Cart %s' % (self.id, self.cart.id)
 
     class Meta:
         ordering = ['-id']

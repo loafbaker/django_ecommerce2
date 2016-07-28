@@ -5,11 +5,30 @@ from .models import UserAddress, Order
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='order_detail_api')
     subtotal = serializers.SerializerMethodField()
     class Meta:
         model = Order
         fields = [
+            'url',
             'id',
+            'user_checkout',
+            'shipping_address',
+            'billing_address',
+            'subtotal',
+            'shipping_total_price',
+            'order_price',
+        ]
+
+    def get_subtotal(self, obj):
+        return obj.cart.subtotal
+
+class OrderDetailSerializer(serializers.ModelSerializer):
+    subtotal = serializers.SerializerMethodField()
+    class Meta:
+        model = Order
+        fields = [
+            'transaction_id',
             'user_checkout',
             'shipping_address',
             'billing_address',

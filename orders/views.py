@@ -6,7 +6,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView
 from django.views.generic.list import ListView
 
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -17,11 +18,36 @@ from carts.mixins import TokenMixin
 from .forms import AddressForm, UserAddressForm
 from .mixins import UserCheckoutAPIMixin, LoginRequiredMixin, CartOrderMixin, UserCheckoutMixin
 from .models import UserCheckout, UserAddress, Order
-from .serializers import UserAddressSerializer
+from .permissions import isOwnerAndAuth
+from .serializers import OrderSerializer, OrderDetailSerializer, UserAddressSerializer
 
 # API CBVs
 
+
+class OrderListAPIView(ListAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [isOwnerAndAuth]
+    model = Order
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        return Order.objects.filter(user_checkout__user=self.request.user)
+
+class OrderRetrieveAPIView(RetrieveAPIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [isOwnerAndAuth]
+    model = Order
+    queryset = Order.objects.all()
+    serializer_class = OrderDetailSerializer
+
 class UserCheckoutAPI(UserCheckoutAPIMixin, APIView):
+    """
+    Registered users need to authenticate before accessing the data,
+    while non-registered users need to pass the user_checkout_token to access the data.
+    N.B. User authenticate method is prior to the user checkout ID method
+    """
+    authentication_classes = [SessionAuthentication]
     permission_classes = [AllowAny]
     def get(self, request, format=None):
         data = self.get_checkout_data(user=request.user)
@@ -33,6 +59,9 @@ class UserCheckoutAPI(UserCheckoutAPIMixin, APIView):
         return Response(data)
 
 class UserAddressCreateAPIView(CreateAPIView):
+    """
+    The API view have no authentication to the user.
+    """
     model = UserAddress
     serializer_class = UserAddressSerializer
 
@@ -41,6 +70,7 @@ class UserAddressListAPIView(TokenMixin, ListAPIView):
     """
     N.B. User authenticate method is prior to the user checkout ID method
     """
+    authentication_classes = [SessionAuthentication]
     model = UserAddress
     queryset = UserAddress.objects.all()
     serializer_class = UserAddressSerializer
