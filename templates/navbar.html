@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 
    <!-- Static navbar -->
     <nav class="navbar navbar-default navbar-static-top">
@@ -14,11 +14,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{% url 'product' %}">Products</a></li>
+            <li><a href="{% url 'products:product' %}">Products</a></li>
 <!--             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li> -->
 
-            <form class="navbar-form navbar-left" method="GET" role="search" action="{% url 'product' %}">
+            <form class="navbar-form navbar-left" method="GET" role="search" action="{% url 'products:product' %}">
               <div class="form-group">
                 <input type="text" class="form-control" name="q" placeholder="Search" value="{{ request.GET.q }}">
               </div>
@@ -27,9 +27,9 @@
 
 
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-cart fa-navbar-cart"></i> <span id="cart-count-badge" class="badge">{{ request.session.cartitem_count }}</span></a></li>
+            <li><a href="{% url 'carts:cart' %}"><i class="fa fa-shopping-cart fa-navbar-cart"></i> <span id="cart-count-badge" class="badge">{{ request.session.cartitem_count }}</span></a></li>
           {% if request.user.is_authenticated %}
-            <li><a href="{% url 'orders' %}">Orders</a></li>
+            <li><a href="{% url 'orders:orders' %}">Orders</a></li>
             <li><a href="{% url 'auth_logout' %}">Logout</a></li>
           {% else %}
             <li><a href="{% url 'registration_register' %}">Register</a></li>

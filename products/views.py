@@ -8,6 +8,8 @@ from django.utils import timezone
 import random
 import re
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication
@@ -64,11 +66,11 @@ class ProductListAPIView(generics.ListAPIView):
     filter_backends = [
         filters.SearchFilter,
         filters.OrderingFilter,
-        filters.DjangoFilterBackend,
+        DjangoFilterBackend,
     ]
     search_fields = ['title', 'description']
     ordering_fields = ['title', 'id']
-    filter_class = ProductFilter
+    filterset_class = ProductFilter
 
 class ProductRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
@@ -107,7 +109,7 @@ class ProductDetailView(DetailView):
 
 class ProductListView(FilterMixin, ListView):
     model = Product
-    filter_class = ProductFilter
+    filterset_class = ProductFilter
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs)
@@ -123,7 +125,7 @@ class ProductListView(FilterMixin, ListView):
             if price_test(query):  # search as price
                 qs = self.model.objects.filter(
                     Q(title__icontains=query) |
-                    Q(description__icontains=query) | 
+                    Q(description__icontains=query) |
                     Q(price=query)
                     )
             else:  # search as title and description
@@ -131,7 +133,8 @@ class ProductListView(FilterMixin, ListView):
                     Q(title__icontains=query) |
                     Q(description__icontains=query)
                     )
-        return qs
+        self.filterset = ProductFilter(self.request.GET, queryset=qs)
+        return self.filterset.qs
 
 
 class VariationListView(StaffRequiredMixin, ListView):

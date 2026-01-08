@@ -6,8 +6,8 @@ from django.http import Http404
 
 class StaffRequiredMixin(object):
     @classmethod
-    def as_view(self, *args, **kwargs):
-        view = super(StaffRequiredMixin, self).as_view(*args, **kwargs)
+    def as_view(cls, *args, **kwargs):
+        view = super(StaffRequiredMixin, cls).as_view(*args, **kwargs)
         return login_required(view)
 
     @method_decorator(login_required)
@@ -20,8 +20,8 @@ class StaffRequiredMixin(object):
 
 class LoginRequiredMixin(object):
     @classmethod
-    def as_view(self, *args, **kwargs):
-        view = super(LoginRequiredMixin, self).as_view(*args, **kwargs)
+    def as_view(cls, *args, **kwargs):
+        view = super(LoginRequiredMixin, cls).as_view(*args, **kwargs)
         return login_required(view)
 
     @method_decorator(login_required)
@@ -30,13 +30,18 @@ class LoginRequiredMixin(object):
 
 
 class FilterMixin(object):
-    filter_class = None
+    filterset_class = None
     search_ordering_param = 'ordering'
 
     def get_queryset(self, *args, **kwargs):
         try:
             qs = super(FilterMixin, self).get_queryset(*args, **kwargs)
-            return qs
+            filterset_class = self.filterset_class
+            if filterset_class:
+                fs = filterset_class(self.request.GET, queryset=qs)
+                return fs.qs
+            else:
+                return qs
         except:
             raise ImproperlyConfigured('You must have a queryset in order to use the FilterMixin')
 
@@ -46,8 +51,8 @@ class FilterMixin(object):
         ordering = self.request.GET.get(self.search_ordering_param)
         if ordering:
             qs = qs.order_by(ordering)
-        filter_class = self.filter_class
-        if filter_class:
-            fs = filter_class(self.request.GET, queryset=qs)
-            context['object_list'] = fs
+        filterset_class = self.filterset_class
+        if filterset_class:
+            fs = filterset_class(self.request.GET, queryset=qs)
+            context['object_list'] = fs.qs
         return context

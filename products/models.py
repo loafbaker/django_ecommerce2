@@ -1,7 +1,5 @@
-from __future__ import unicode_literals
-
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 import uuid
@@ -12,7 +10,7 @@ class ProductQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(active=True)
 
-class ProcuctManager(models.Manager):
+class ProductManager(models.Manager):
     def get_queryset(self):
         return ProductQuerySet(self.model, using=self._db)
 
@@ -33,16 +31,16 @@ class Product(models.Model):
     active = models.BooleanField(default=True)
     # Product Categories
     categories = models.ManyToManyField('Category')
-    default = models.ForeignKey('Category', related_name='default_category', 
-                                null=True, blank=True)
+    default = models.ForeignKey('Category', related_name='default_category',
+                                null=True, blank=True, on_delete=models.CASCADE)
 
-    objects = ProcuctManager()
+    objects = ProductManager()
 
-    def __unicode__(self): # def __str__(self)
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'pk': self.pk})
+        return reverse('products:product_detail', kwargs={'pk': self.pk})
 
     def get_feature_image_url(self):
         img = self.productimage_set.first()
@@ -51,7 +49,7 @@ class Product(models.Model):
         return None
 
 class Variation(models.Model):
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     price = models.DecimalField(decimal_places=2, max_digits=20)
     sale_price = models.DecimalField(decimal_places=2, max_digits=20,
@@ -59,7 +57,7 @@ class Variation(models.Model):
     active = models.BooleanField(default=True)
     inventory = models.IntegerField(blank=True, null=True) # None means unlimited amount
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_price(self):
@@ -76,7 +74,7 @@ class Variation(models.Model):
         return mark_safe(html_text)
 
     def remove_from_cart(self):
-        return '%s?item_id=%s&delete=\u2713' % (reverse('cart'), self.id)
+        return '%s?item_id=%s&delete=\u2713' % (reverse('carts:cart'), self.id)
 
     def get_title(self):
         if self.title == 'Default':
@@ -102,10 +100,10 @@ def image_upload_to(instance, filename):
     return 'products/%s/%s' % (slug, new_filename)
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=image_upload_to)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.product.title
 
 
@@ -118,11 +116,11 @@ class Category(models.Model):
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'slug': self.slug})
+        return reverse('categories:category_detail', kwargs={'slug': self.slug})
 
 # Featured Products
 
@@ -135,7 +133,7 @@ def image_upload_to_featured(instance, filename):
     return 'products/%s/featured/%s' % (slug, new_filename)
 
 class ProductFeatured(models.Model):
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=image_upload_to_featured)
     title = models.CharField(max_length=120, null=True, blank=True)
     text = models.CharField(max_length=220, null=True, blank=True)
@@ -143,13 +141,12 @@ class ProductFeatured(models.Model):
     The text will forced to be shown in the middle when the as_background is set to be true.
     So text_right would not work anymore.
     If as_background is set to be false, then the text will be shown according to the 
-    text_right bollean field. The text will be show on the left of the screen by default.
+    text_right boolean field. The text will be show on the left of the screen by default.
     """
     text_right = models.BooleanField(default=False)
-    as_background = models.BooleanField(default=False)    
+    as_background = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     active = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.product.title
-

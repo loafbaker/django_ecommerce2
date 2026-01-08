@@ -1,9 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import OrderListView, OrderDetailView
 
 
+app_name = 'orders'
+
 urlpatterns = [
-    url(r'^$', OrderListView.as_view(), name='orders'),
-    url(r'^(?P<pk>\d+)$', OrderDetailView.as_view(), name='order_detail'),
+    path('', OrderListView.as_view(), name='orders'),
+    path('<int:pk>/', OrderDetailView.as_view(), name='order_detail'),
 ]

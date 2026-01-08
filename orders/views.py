@@ -1,7 +1,7 @@
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView
 from django.views.generic.list import ListView
@@ -20,6 +20,7 @@ from .mixins import UserCheckoutAPIMixin, LoginRequiredMixin, CartOrderMixin, Us
 from .models import UserCheckout, UserAddress, Order
 from .permissions import isOwnerAndAuth
 from .serializers import OrderSerializer, OrderDetailSerializer, UserAddressSerializer
+
 
 # API CBVs
 
@@ -82,7 +83,7 @@ class UserAddressListAPIView(TokenMixin, ListAPIView):
             user_checkout_id = user_checkout_data.get('user_checkout_id')
         except:
             user_checkout_id = None
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             return UserAddress.objects.filter(user_checkout__user=self.request.user)
         elif user_checkout_id:
             return UserAddress.objects.filter(user_checkout__id=int(user_checkout_id))
@@ -133,7 +134,7 @@ class AddressSelectFormView(CartOrderMixin, UserCheckoutMixin, FormView):
         return super(AddressSelectFormView, self).form_valid(form, *args, **kwargs)
 
     def get_success_url(self, *args, **kwargs):
-        return reverse('checkout')
+        return reverse('checkout:checkout')
 
 class UserAddressCreateView(UserCheckoutMixin, CreateView):
     form_class = UserAddressForm
@@ -148,7 +149,7 @@ class UserAddressCreateView(UserCheckoutMixin, CreateView):
         return super(UserAddressCreateView, self).form_valid(form, *args, **kwargs)
 
     def get_success_url(self, *args, **kwargs):
-        return reverse('order_address')
+        return reverse('checkout:order_address')
 
 class OrderListView(LoginRequiredMixin, UserCheckoutMixin, ListView):
     queryset = Order.objects.all()

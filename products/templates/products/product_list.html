@@ -13,14 +13,14 @@
 {% endif %}
   	  <input type="submit" value="Apply Filter" class="btn btn-default" />
   	</form>
-    <a href="{% url 'product' %}">Clear Filter</a>
+    <a href="{% url 'products:product' %}">Clear Filter</a>
   </div>
   <div class="col-sm-10">
 
 {% if query %}
     <h3>Search results for: {{ query }}</h3>
 {% else %}
-    <h3>All Products <small><a href="{% url 'categories' %}">Categories</a></small></h3>
+    <h3>All Products <small><a href="{% url 'categories:categories' %}">Categories</a></small></h3>
 {% endif %}
 
 {% if object_list.count > 0 %}

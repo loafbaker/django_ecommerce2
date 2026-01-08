@@ -1,23 +1,24 @@
-"""django_ecommerce2 URL Configuration
+"""
+URL configuration for django_ecommerce2 project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.9/topics/http/urls/
+    https://docs.djangoproject.com/en/5.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
+from django.urls import path, include
+from rest_framework_simplejwt import views as jwt_views
 
 from newsletter import views as newsletter_views
 from . import views as main_views
@@ -46,35 +47,35 @@ from products.views import (
     )
 
 urlpatterns = [
-    url(r'^$', newsletter_views.home, name='home'),
-    url(r'^contact/$', newsletter_views.contact, name='contact'),
-    url(r'^about/$', main_views.about, name='about'),
-    url(r'^cart/', include('carts.urls')),
-    url(r'^checkout/', include('carts.urls_checkout')),
-    url(r'^orders/', include('orders.urls')),
-    url(r'^products/', include('products.urls')),
-    url(r'^categories/', include('products.urls_categories')),
+    path('', newsletter_views.home, name='home'),
+    path('contact/', newsletter_views.contact, name='contact'),
+    path('about/', main_views.about, name='about'),
+    path('cart/', include('carts.urls', namespace='carts')),
+    path('checkout/', include('carts.urls_checkout', namespace='checkout')),
+    path('orders/', include('orders.urls', namespace='orders')),
+    path('products/', include('products.urls', namespace='products')),
+    path('categories/', include('products.urls_categories', namespace='categories')),
 
-    url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('registration.backends.default.urls')),
 ]
 
 urlpatterns += [
-    url(r'^api/$', APIHomeView.as_view(), name='home_api'),
-    url(r'^api/cart/$', CartAPIView.as_view(), name='cart_api'),
-    url(r'^api/checkout/$', CheckoutAPIView.as_view(), name='checkout_api'),
-    url(r'^api/checkout/finalize/$', CheckoutFinalizeAPIView.as_view(), name='checkout_finalize_api'),
-    url(r'^api/auth/token/$', obtain_jwt_token, name='auth_login_api'),
-    url(r'^api/auth/token/refresh/$', refresh_jwt_token, name='refresh_token_api'),
-    url(r'^api/user/checkout/$', UserCheckoutAPI.as_view(), name='user_checkout_api'),
-    url(r'^api/user/address/$', UserAddressListAPIView.as_view(), name='user_address_list_api'),
-    url(r'^api/user/address/create/$', UserAddressCreateAPIView.as_view(), name='user_address_create_api'),
-    url(r'^api/orders/$', OrderListAPIView.as_view(), name='orders_api'),
-    url(r'^api/orders/(?P<pk>\d+)/$', OrderRetrieveAPIView.as_view(), name='order_detail_api'),
-    url(r'^api/products/$', ProductListAPIView.as_view(), name='products_api'),
-    url(r'^api/products/(?P<pk>\d+)/$', ProductRetrieveAPIView.as_view(), name='product_detail_api'),
-    url(r'^api/categories/$', CategoryListAPIView.as_view(), name='categories_api'),
-    url(r'^api/categories/(?P<pk>\d+)/$', CategoryRetrieveAPIView.as_view(), name='category_detail_api'),
+    path('api/', APIHomeView.as_view(), name='home_api'),
+    path('api/cart/', CartAPIView.as_view(), name='cart_api'),
+    path('api/checkout/', CheckoutAPIView.as_view(), name='checkout_api'),
+    path('api/checkout/finalize/', CheckoutFinalizeAPIView.as_view(), name='checkout_finalize_api'),
+    path('api/auth/token/', jwt_views.TokenObtainPairView.as_view(), name='auth_login_api'),
+    path('api/auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='refresh_token_api'),
+    path('api/user/checkout/', UserCheckoutAPI.as_view(), name='user_checkout_api'),
+    path('api/user/address/', UserAddressListAPIView.as_view(), name='user_address_list_api'),
+    path('api/user/address/create/', UserAddressCreateAPIView.as_view(), name='user_address_create_api'),
+    path('api/orders/', OrderListAPIView.as_view(), name='orders_api'),
+    path('api/orders/<int:pk>/', OrderRetrieveAPIView.as_view(), name='order_detail_api'),
+    path('api/products/', ProductListAPIView.as_view(), name='products_api'),
+    path('api/products/<int:pk>/', ProductRetrieveAPIView.as_view(), name='product_detail_api'),
+    path('api/categories/', CategoryListAPIView.as_view(), name='categories_api'),
+    path('api/categories/<int:pk>/', CategoryRetrieveAPIView.as_view(), name='category_detail_api'),
 ]
 
 if settings.DEBUG:

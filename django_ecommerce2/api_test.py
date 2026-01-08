@@ -39,12 +39,13 @@ def user_product_api_test():
 
     print(json.dumps(json_data, indent=2))
 
-    token = json_data['token']
+    token = json_data['access']
+    refresh = json_data['refresh']
 
     # Retrive products test
 
     headers = {
-        'Authorization': 'JWT %s' % (token)
+        'Authorization': 'Bearer %s' % (token)
     }
     p_r = requests.get(products_url, headers=headers)
 
@@ -54,13 +55,13 @@ def user_product_api_test():
     # Refresh URL token
 
     data = {
-        'token': token
+        'refresh': refresh
     }
     refresh_r = requests.post(refresh_url, data=data)
 
     print(refresh_r.json())
 
-    token = refresh_r.json()['token']
+    token = refresh_r.json()['access']
 
     # Cart URL test
     cart_r = requests.get(cart_url)

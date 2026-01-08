@@ -3,13 +3,13 @@ django_ecommerce2
 
 An improved e-commerce app built within django framework
 
-Run in django 1.9.4 and python 2.7.6
+Run in django 5.2.9 and python 3.10.12
 
 # Setup
 
 Install all the required libraries
 
-    pip install -r requirements.txt
+    pip install -r requirements.in
 
 Rebuild database
 
@@ -34,14 +34,16 @@ Before you enable all the functions in django_ecommerce2, you have to reset a fe
 1. If you want to activate the email function for your server, you need to refill your own parameters for the following line codes.
 
 ```python
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'yourgmail@gmail.com'
 EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 ```
 
-2. if you want to run on Braintree application, you have to replace the following definitions with your own Braintree API keys.
+2. if you want to run on Braintree application, you have to replace the following definitions with your own Braintree API keys. **(Note: Braintree APIs have not been tested and verified in Django 5.2.9)**
 
 ```python
 BRAINTREE_PUBLIC = 'your-braintree-public-key'
@@ -216,4 +218,6 @@ Ver.81   [Django CORS Headers](../../tree/0c300d4add2ec55cf4042a6c6e9207bca52ec4
 
 Ver.82   [Order List & Retrieve API](../../tree/26197db25bbda929639b9bc7f4d4f38387bacb35)
 
-Current Ver.   API Home Final
+Ver.83   [API Home Final](../../tree/7f1e95cf4082960861c3090ed47480eefb9593b9)
+
+Current Ver.   Major upgrade to Django 5.2 & Python 3

@@ -1,13 +1,12 @@
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.db import models
 
 # Create your models here.
+
 from products.models import Variation
 
 class Cart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
     items = models.ManyToManyField(Variation, through='CartItem')
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -15,7 +14,7 @@ class Cart(models.Model):
     tax_total = models.DecimalField(decimal_places=2, max_digits=50, default=0.00)
     total = models.DecimalField(decimal_places=2, max_digits=50, default=0.00)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.id)
 
     def update_subtotal(self):
@@ -25,12 +24,12 @@ class Cart(models.Model):
         self.save()
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart)
-    item = models.ForeignKey(Variation)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    item = models.ForeignKey(Variation, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     line_item_total = models.DecimalField(decimal_places=2, max_digits=20)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.item.title
 
     def remove_url(self):

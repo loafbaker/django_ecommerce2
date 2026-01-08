@@ -26,7 +26,7 @@ class UserCheckoutAPIMixin(TokenMixin):
             email = email.lower()
         data = {}
         user_checkout = None
-        if user is not None and user.is_authenticated():
+        if user is not None and user.is_authenticated:
             if email is not None and email != user.email:
                 data = self.user_failure(message='The user data conflicts to the authenticated user. Please try again.')
             else:
@@ -87,7 +87,7 @@ class CartOrderMixin(object):
             self.request.session['cart_id'] = cart_id
 
         cart = Cart.objects.get(id=cart_id)
-        if self.request.user.is_authenticated(): # Login user
+        if self.request.user.is_authenticated:  # Login user
             # if the cart is not belong to the current login user,
             # start a new cart
             if cart.user is not None and cart.user != self.request.user:
@@ -104,7 +104,7 @@ class CartOrderMixin(object):
 class UserCheckoutMixin(object):
     def get_user_checkout(self, *args, **kwargs):
         user_checkout_id = self.request.session.get('user_checkout_id')
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             user_checkout, created = UserCheckout.objects.get_or_create(email=self.request.user.email)
             if created:  # Do not validate if the user and the email match
                 user_checkout.user = self.request.user

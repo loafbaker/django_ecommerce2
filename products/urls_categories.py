@@ -1,9 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import CategoryListView, CategoryDetailView
 
 
+app_name = 'categories'
+
 urlpatterns = [
-    url(r'^$', CategoryListView.as_view(), name='categories'),
-    url(r'^(?P<slug>[\w-]+)/$', CategoryDetailView.as_view(), name='category_detail'),
+    path('', CategoryListView.as_view(), name='categories'),
+    path('<slug:slug>/', CategoryDetailView.as_view(), name='category_detail'),
 ]

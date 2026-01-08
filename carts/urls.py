@@ -1,9 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import CartView, ItemCountView
 
 
+app_name = 'carts'
+
 urlpatterns = [
-    url(r'^$', CartView.as_view(), name='cart'),
-    url(r'^count$', ItemCountView.as_view(), name='cartitem_count'),
+    path('', CartView.as_view(), name='cart'),
+    path('count/', ItemCountView.as_view(), name='cartitem_count'),
 ]

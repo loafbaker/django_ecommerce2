@@ -1,12 +1,14 @@
-from django.conf.urls import url
+from django.urls import path
 
 from orders.views import AddressSelectFormView, UserAddressCreateView
 from .views import CheckoutView, CheckoutFinalView
 
 
+app_name = 'checkout'
+
 urlpatterns = [
-    url(r'^$', CheckoutView.as_view(), name='checkout'),
-    url(r'^final/$', CheckoutFinalView.as_view(), name='checkout_final'),
-    url(r'^address/$', AddressSelectFormView.as_view(), name='order_address'),
-    url(r'^address/add/$', UserAddressCreateView.as_view(), name='order_address_create'),
+    path('', CheckoutView.as_view(), name='checkout'),
+    path('final/', CheckoutFinalView.as_view(), name='checkout_final'),
+    path('address/', AddressSelectFormView.as_view(), name='order_address'),
+    path('address/add/', UserAddressCreateView.as_view(), name='order_address_create'),
 ]

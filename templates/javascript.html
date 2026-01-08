@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -17,7 +17,7 @@
 
         $.ajax({
           type: "GET",
-          url: "{% url 'cartitem_count' %}",
+          url: "{% url 'carts:cartitem_count' %}",
           success: function(data){
             badge.text(data.cartitem_count);
           },

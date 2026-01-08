@@ -7,4 +7,4 @@ class isOwnerAndAuth(BasePermission):
         return obj.user_checkout and obj.user_checkout.user == request.user
 
     def has_permission(self, request, view):
-        return request.user and request.user.is_authenticated()
+        return request.user and request.user.is_authenticated

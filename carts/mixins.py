@@ -7,7 +7,7 @@ class TokenMixin(object):
 
     def create_token(self, data_dict):
         if type(data_dict) == type(dict()):
-            token = base64.b64encode(str(data_dict))
+            token = base64.b64encode(str(data_dict).encode('utf-8'))
             return token
         else:
             raise ValueError("Creating a token must use a python dictionary.")
@@ -34,7 +34,7 @@ class CartTokenMixin(TokenMixin):
             cart = self.get_cart_from_token(token_data)
         else:
             cart = Cart()
-            if self.request.user.is_authenticated():
+            if self.request.user.is_authenticated:
                 cart.user = self.request.user
             cart.save()
             data = {

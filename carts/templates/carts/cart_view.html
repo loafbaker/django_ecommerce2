@@ -13,7 +13,7 @@
     };
     $.ajax({
       type: "GET",
-      url: "{% url 'cart' %}",
+      url: "{% url 'carts:cart' %}",
       data: formData,
       success: function(data) {
         $("#item-line-total-"+item_id).text(data.line_item_total);
@@ -39,7 +39,7 @@
     };
     $.ajax({
       type: "GET",
-      url: "{% url 'cart' %}",
+      url: "{% url 'carts:cart' %}",
       data: formData,
       success: function(data) {
         showFlashMessage(data.flash_message, 2800);
@@ -113,7 +113,7 @@
           <td>&nbsp;</td>
         </tr>
         <tr>
-          <td colspan="3" class="text-right"><a class="btn btn-warning" href="{% url 'checkout' %}">Checkout</a></td>
+          <td colspan="3" class="text-right"><a class="btn btn-warning" href="{% url 'checkout:checkout' %}">Checkout</a></td>
           <td>&nbsp;</td>
         </tr>
       </table>

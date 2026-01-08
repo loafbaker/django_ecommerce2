@@ -1,10 +1,9 @@
-from __future__ import unicode_literals
-
 from django.apps import AppConfig
 
 
 class CartsConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
     name = 'carts'
 
     def ready(self):
-        from . import signals
+        import carts.signals

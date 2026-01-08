@@ -13,7 +13,7 @@ class ProductImageInline(admin.TabularInline):
     extra = 0
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['__unicode__', 'price']
+    list_display = ['__str__', 'price']
     inlines = [
         VariationInline,
         ProductImageInline,

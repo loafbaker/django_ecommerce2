@@ -1,12 +1,12 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.urlresolvers import reverse
 from django.http import JsonResponse, Http404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin, DetailView
 from django.views.generic.edit import FormMixin
-from django.shortcuts import render, get_object_or_404, redirect
 
 import braintree
 
@@ -24,6 +24,7 @@ from products.models import Variation
 from .mixins import TokenMixin, CartTokenMixin
 from .models import Cart, CartItem
 from .serializers import CartItemSerializer, CheckoutSerializer
+
 
 # Braintree settings
 if settings.DEBUG:
@@ -255,7 +256,7 @@ class CheckoutFinalizeAPIView(TokenMixin, APIView):
 class ItemCountView(View):
 
     def get(self, request, *args, **kwargs):
-        if request.is_ajax():
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             cart_id = self.request.session.get('cart_id')
             if cart_id:
                 cart = Cart.objects.get(id=cart_id)
@@ -281,7 +282,7 @@ class CartView(SingleObjectMixin, View):
             self.request.session['cart_id'] = cart_id
 
         cart = Cart.objects.get(id=cart_id)
-        if self.request.user.is_authenticated(): # Login user
+        if self.request.user.is_authenticated: # Login user
             # if the cart is not belong to the current login user,
             # start a new cart
             if cart.user is not None and cart.user != self.request.user:
@@ -332,7 +333,7 @@ class CartView(SingleObjectMixin, View):
                 flash_message = 'Item removed successfully.'
             elif item_updated:
                 flash_message = 'Quantity has been update successfully.'
-        if request.is_ajax():
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             # Refresh data for Ajax request
             cart.update_subtotal()
             cartitem_count = cart.cartitem_set.count()
@@ -370,13 +371,13 @@ class CheckoutView(FormMixin, CartOrderMixin, DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(CheckoutView, self).get_context_data(*args, **kwargs)
         user_checkout_id = self.request.session.get('user_checkout_id')
-        if self.request.user.is_authenticated() or user_checkout_id:
+        if self.request.user.is_authenticated or user_checkout_id:
             context['user_can_continue'] = True
         else:
             context['user_can_continue'] = False
             context['login_form'] = AuthenticationForm()
             context['next_url'] = self.request.build_absolute_uri()
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             user_checkout, created = UserCheckout.objects.get_or_create(email=self.request.user.email)
             if created:  # Do not validate if the user and the email match
                 user_checkout.user = self.request.user
@@ -402,7 +403,7 @@ class CheckoutView(FormMixin, CartOrderMixin, DetailView):
             return self.form_invalid(form)
 
     def get_success_url(self):
-        return reverse('checkout')
+        return reverse('checkout:checkout')
 
     def get(self, request, *args, **kwargs):
         get_data = super(CheckoutView, self).get(request, *args, **kwargs)
@@ -438,7 +439,7 @@ class CheckoutFinalView(CartOrderMixin, View):
         order = self.get_order()
         order_price = order.order_price
         if order.cart.cartitem_set.count == 0:
-            return reverse('cart')
+            return reverse('carts:cart')
         # Validate payment
         nonce = request.POST.get('payment_method_nonce')
         if nonce:
