@@ -5,7 +5,19 @@ An improved e-commerce app built within django framework
 
 Run in django 5.2.9 and python 3.10.12
 
+# Updates in January 2026
+
+- Upgrade to Django 5.2.9
+- Remove Python 2 scripts and switch to Python 3
+- Migrate database file to the updated Django
+- Migrate model filters to `django-filter==25.2`
+- Switch the API authorization package to `djangorestframework-simplejwt`
+- Fix some typos
+- Add `uv` support
+
 # Setup
+
+(The setup process can also be fulfilled with `uv`)
 
 Install all the required libraries
 
@@ -220,4 +232,10 @@ Ver.82   [Order List & Retrieve API](../../tree/26197db25bbda929639b9bc7f4d4f383
 
 Ver.83   [API Home Final](../../tree/7f1e95cf4082960861c3090ed47480eefb9593b9)
 
-Current Ver.   Major upgrade to Django 5.2 & Python 3
+---
+
+*(The versions below is for Django 5.2.9)*
+
+Ver.84   [Major upgrade to Django 5.2 & Python 3](../../tree/3b9f647d2da0ce8b3db00d00fe5ea7831dd4ffe8)
+
+Current Ver.   Add uv support
